@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import Styles from './page.module.css';
 import ProgressBar from '@/components/common/Progress/ProgressBar';
 import IndeterminateProgressBar from '@/components/common/Progress/FreeProgressBar';
@@ -19,14 +20,32 @@ interface Organization {
   createdAt: string;
 }
 
+interface JoinRequestModal {
+  isOpen: boolean;
+  organizationId: string;
+  organizationName: string;
+}
+
 export default function OrganizationsPage() {
+  const { data: session } = useSession();
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [joinRequestModal, setJoinRequestModal] = useState<JoinRequestModal>({
+    isOpen: false,
+    organizationId: '',
+    organizationName: ''
+  });
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingRequests, setPendingRequests] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetchOrganizations();
-  }, []);
+    if (session?.user?.id) {
+      fetchPendingRequests();
+    }
+  }, [session]);
 
   const fetchOrganizations = async () => {
     try {
@@ -44,13 +63,98 @@ export default function OrganizationsPage() {
     }
   };
 
+  const fetchPendingRequests = async () => {
+    try {
+      if (!session?.user?.id) return;
+      
+      // You'll need to create this API endpoint to fetch pending requests
+      const response = await fetch(`/api/volunteer/join-request/pending?volunteerId=${session.user.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        const pendingOrgIds = new Set<string>(
+          data.requests?.map((req: { organizationId: string }) => req.organizationId) || []
+        );
+        setPendingRequests(pendingOrgIds);
+      }
+    } catch (err) {
+      console.error('Error fetching pending requests:', err);
+    }
+  };
+
+  const openJoinRequestModal = (organizationId: string, organizationName: string) => {
+    setJoinRequestModal({
+      isOpen: true,
+      organizationId,
+      organizationName
+    });
+    setMessage('');
+  };
+
+  const closeJoinRequestModal = () => {
+    setJoinRequestModal({
+      isOpen: false,
+      organizationId: '',
+      organizationName: ''
+    });
+    setMessage('');
+    setIsSubmitting(false);
+  };
+
+  const handleSendJoinRequest = async () => {
+    if (!session?.user?.id) {
+      alert('Please log in to send join requests');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/volunteer/join-request/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          volunteerId: session.user.id,
+          organizationId: joinRequestModal.organizationId,
+          message: message.trim() || null
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Join request sent successfully!');
+        setPendingRequests(prev => new Set([...prev, joinRequestModal.organizationId]));
+        closeJoinRequestModal();
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error sending join request:', error);
+      alert('Failed to send join request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getJoinRequestButtonText = (orgId: string) => {
+    if (pendingRequests.has(orgId)) {
+      return 'Request Pending';
+    }
+    return 'Send Join Request';
+  };
+
+  const isJoinRequestDisabled = (orgId: string) => {
+    return pendingRequests.has(orgId) || !session?.user?.id;
+  };
+
   if (loading) {
     return (
       <main className={Styles.page}>
         <h1>Organizations</h1>
         <div className={Styles.loading}>
-            <IndeterminateProgressBar />
-
+          <IndeterminateProgressBar />
         </div>
       </main>
     );
@@ -148,15 +252,79 @@ export default function OrganizationsPage() {
                 <span className={Styles.joinedDate}>
                   Joined: {new Date(org.createdAt).toLocaleDateString()}
                 </span>
-                <button className={Styles.contactButton}>
-                  Contact Organization
-                </button>
+                <div className={Styles.buttonGroup}>
+                  <button className={Styles.contactButton}>
+                    Contact Organization
+                  </button>
+                  <button 
+                    className={`${Styles.joinRequestButton} ${
+                      isJoinRequestDisabled(org._id) ? Styles.disabled : ''
+                    }`}
+                    onClick={() => openJoinRequestModal(org._id, org.organizationName)}
+                    disabled={isJoinRequestDisabled(org._id)}
+                  >
+                    {getJoinRequestButtonText(org._id)}
+                  </button>
+                </div>
               </div>
             </div>
           ))
         )}
       </div>
+
+      {/* Join Request Modal */}
+      {joinRequestModal.isOpen && (
+        <div className={Styles.modalOverlay} onClick={closeJoinRequestModal}>
+          <div className={Styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={Styles.modalHeader}>
+              <h3>Send Join Request</h3>
+              <button 
+                className={Styles.closeButton}
+                onClick={closeJoinRequestModal}
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className={Styles.modalContent}>
+              <p>Send a join request to <strong>{joinRequestModal.organizationName}</strong></p>
+              
+              <div className={Styles.messageField}>
+                <label htmlFor="message">Message (optional)</label>
+                <textarea
+                  id="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Why would you like to join this organization?"
+                  className={Styles.messageTextarea}
+                  rows={4}
+                  maxLength={500}
+                />
+                <div className={Styles.characterCount}>
+                  {message.length}/500 characters
+                </div>
+              </div>
+            </div>
+
+            <div className={Styles.modalFooter}>
+              <button
+                className={Styles.cancelButton}
+                onClick={closeJoinRequestModal}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </button>
+              <button
+                className={Styles.sendButton}
+                onClick={handleSendJoinRequest}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Request'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
-

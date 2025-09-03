@@ -9,7 +9,19 @@ const VolunteerSchema = new mongoose.Schema({
         },
         image: String,
         googleId: String,
+
+        dateOfBirth: {
+            type: Date,
+        },
+
         isAdmin: Boolean,
+
+        organizations: [{
+            organizationId: {
+                type: String,
+                required: true
+            },
+        }],
     }, {
         timestamps: true
 });

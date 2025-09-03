@@ -6,6 +6,8 @@ import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import CreateProjectForm from '@/components/organization/CreateProjectForm';
+import PendingJoinRequestsList from '@/components/organization/PendingJoinRequestsList';
+import VolunteerList from '@/components/organization/VolunteerList';
 
 export default function ProfilePage() {
     const { data: session, status } = useSession();
@@ -34,30 +36,43 @@ export default function ProfilePage() {
 
     return (
         <main className={Styles.page}>
-        {session.user?.image && (
-            <Image
-            src={session.user.image}
-            alt="Profile"
-            width={80}
-            height={80}
-            style={{ 
-                borderRadius: '50%', 
-                marginBottom: '1rem',
-                objectFit: 'cover'
-            }}
-            />
-        )}
-        
-        <h1>Welcome, {session.user?.name}!</h1>
-        <p>Email: {session.user?.email}</p>
-        
-        {session.user?.accountType && (
-            <p>Account Type: <strong>{session.user.accountType}</strong></p>
-        )}
+            {session.user?.image && (
+                <Image
+                src={session.user.image}
+                alt="Profile"
+                width={80}
+                height={80}
+                style={{ 
+                    borderRadius: '50%', 
+                    marginBottom: '1rem',
+                    objectFit: 'cover'
+                }}
+                />
+            )}
+            
+            <h1>Welcome, {session.user?.name}!</h1>
+            <p>Email: {session.user?.email}</p>
+            
+            {session.user?.accountType && (
+                <p>Account Type: <strong>{session.user.accountType}</strong></p>
+            )}
 
+            <CreateProjectForm />
 
+            {/* Show Organization-specific content */}
+            {session.user?.accountType === 'organization' && (
+                <>
+                    {/* Pending Join Requests Section */}
+                    <div className={Styles.pendingRequestsSection}>
+                        <PendingJoinRequestsList organizationId={session.user.id} />
+                    </div>
 
-        <CreateProjectForm />
+                    {/* Current Volunteers Section */}
+                    <div className={Styles.volunteersSection}>
+                        <VolunteerList organizationId={session.user.id} />
+                    </div>
+                </>
+            )}
         </main>
     );
 }
