@@ -1,0 +1,11 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}

@@ -1,0 +1,134 @@
+/* Base Button Style */
+.button {
+    padding: 8px 16px;
+    border-radius: 24px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    height: fit-content;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+
+    font-size: 16px;
+    font-family: var(--font-body);
+    font-weight: 450;
+}
+
+.button:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 2px;
+}
+
+/* Shared icon styles */
+.buttonIcon {
+    color: var(--color-black);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Variant: Primary */
+.primary {
+    background-color: var(--color-primary);
+    color: var(--color-black);
+    border-color: var(--color-primary);
+}
+
+.primary:hover {
+    box-shadow: 0 0 0 4px rgba(255, 196, 35, 0.6);
+}
+
+/* Variant: Secondary */
+.secondary {
+    background-color: var(--color-gray);
+    color: var(--color-white);
+    border-color: var(--color-gray);
+}
+
+.secondary:hover {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border-color: var(--color-white);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.336);
+}
+
+/* Variant: Outlined */
+.outlined {
+    background-color: var(--color-card);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+.outlined .buttonIcon {
+    color: var(--color-text);
+}
+.outlined:hover {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.336);
+}
+
+/* Variant: Icon */
+.icon {
+    background-color: var(--color-card);
+    color: inherit; /* Let children define color */
+    padding: 8px;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    border-color: var(--color-border);
+    display: inline-flex;
+}
+
+/* Force icon color inside icon button */
+.icon .buttonIcon {
+    color: var(--color-text);
+}
+
+.icon:hover {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.336);
+}
+/* Variant: Action */
+.action {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    border-color: var(--color-green);
+}
+
+.action:hover {
+    background-color: var(--color-dark-green);
+}
+
+/* Variant: Danger */
+.danger {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    border-color: var(--color-red);
+}
+
+.danger:hover {
+    background-color: var(--color-dark-red);
+    border-color: var(--color-dark-red);
+}
+
+.submit {
+    background-color: var(--color-light2-gray);
+    color: var(--color-white);
+}
+.submit:hover {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.336);
+}
+
+.button:disabled,
+.primary:disabled,
+.secondary:disabled,
+.outlined:disabled,
+.icon:disabled,
+.action:disabled,
+.danger:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+    /* optionally, tweak colors to visually indicate disabled */
+}

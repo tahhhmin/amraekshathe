@@ -2,24 +2,54 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/auth/signin');
+      return;
     }
-  }, [status, router]);
 
-  if (status === 'loading') {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
-      </div>
-    );
+    if (status === 'authenticated' && session?.user && !session.user.id) {
+      // New user, create account
+      createAccount();
+    }
+  }, [status, session, router]);
+
+  const createAccount = async () => {
+    setCreating(true);
+    try {
+      const accountType = localStorage.getItem('accountType') || 'volunteer';
+      
+      const response = await fetch('/api/create-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          accountType,
+          name: session?.user?.name,
+          email: session?.user?.email,
+          image: session?.user?.image,
+        }),
+      });
+
+      if (response.ok) {
+        localStorage.removeItem('accountType');
+        window.location.reload(); // Refresh to get updated session
+      }
+    } catch (error) {
+      console.error('Error creating account:', error);
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  if (status === 'loading' || creating) {
+    return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading...</div>;
   }
 
   if (!session) {
@@ -27,57 +57,39 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-        <div className="text-center">
-          {/* Debug info */}
-          <div className="mb-4 p-2 bg-gray-100 rounded text-xs">
-            <p><strong>Name:</strong> {session.user?.name}</p>
-            <p><strong>Email:</strong> {session.user?.email}</p>
-            <p><strong>Image URL:</strong> {session.user?.image || 'No image provided'}</p>
-          </div>
-          
-          {session.user?.image ? (
-            <div className="mb-4">
-              <img
-                className="mx-auto h-20 w-20 rounded-full object-cover border-2 border-gray-200"
-                src={session.user.image}
-                alt="Profile"
-                onLoad={() => console.log('✅ Image loaded successfully:', session.user?.image)}
-                onError={(e) => {
-                  console.error('❌ Image failed to load:', session.user?.image);
-                  console.error('Error event:', e);
-                  // Hide the broken image and show fallback
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  // Show the fallback div instead
-                  const fallback = target.nextElementSibling as HTMLElement;
-                  if (fallback) fallback.style.display = 'flex';
-                }}
-              />
-              <div 
-                className="mx-auto h-20 w-20 rounded-full bg-blue-500 items-center justify-center text-white text-2xl font-bold" 
-                style={{ display: 'none' }}
-              >
-                {session.user?.name?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'U'}
-              </div>
-              <p className="text-xs mt-2 text-gray-500">Profile Picture</p>
-            </div>
-          ) : (
-            <div className="mb-4">
-              <div className="mx-auto h-20 w-20 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold">
-                {session.user?.name?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'U'}
-              </div>
-              <p className="text-xs mt-2 text-gray-500">Fallback Avatar</p>
-            </div>
+    <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+        <div style={{ textAlign: 'center' }}>
+          {session.user?.image && (
+            <img
+              src={session.user.image}
+              alt="Profile"
+              style={{ width: '80px', height: '80px', borderRadius: '50%', marginBottom: '1rem' }}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
           )}
-          <h2 className="mt-4 text-2xl font-bold text-gray-900">
-            Welcome, {session.user?.name}!
-          </h2>
-          <p className="mt-2 text-gray-600">{session.user?.email}</p>
+          
+          <h1>Welcome, {session.user?.name}!</h1>
+          <p>Email: {session.user?.email}</p>
+          
+          {session.user.accountType && (
+            <p>Account Type: <strong>{session.user.accountType}</strong></p>
+          )}
+          
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors"
+            style={{
+              marginTop: '1rem',
+              padding: '0.5rem 1rem',
+              backgroundColor: '#ef4444',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
           >
             Sign Out
           </button>

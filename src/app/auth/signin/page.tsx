@@ -1,47 +1,55 @@
 'use client';
 
-import { signIn, getSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    getSession().then((session) => {
-      if (session) {
-        router.push('/dashboard');
-      }
-    });
-  }, [router]);
-
-  const handleGoogleSignIn = async () => {
+  const handleSignIn = async (accountType: 'volunteer' | 'organization') => {
     setLoading(true);
-    try {
-      await signIn('google', { callbackUrl: '/dashboard' });
-    } catch (error) {
-      console.error('Sign in error:', error);
-    } finally {
-      setLoading(false);
-    }
+    localStorage.setItem('accountType', accountType);
+    await signIn('google', { callbackUrl: '/dashboard' });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
-        <div>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f5f5' }}>
+      <div style={{ background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Choose Account Type</h1>
+        
+        <div style={{ display: 'grid', gap: '1rem' }}>
           <button
-            onClick={handleGoogleSignIn}
+            onClick={() => handleSignIn('volunteer')}
             disabled={loading}
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              padding: '1rem 2rem',
+              backgroundColor: '#3b82f6',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '1rem'
+            }}
           >
-            {loading ? 'Signing in...' : 'Sign in with Google'}
+            🙋‍♂️ Sign in as Volunteer
+          </button>
+          
+          <button
+            onClick={() => handleSignIn('organization')}
+            disabled={loading}
+            style={{
+              padding: '1rem 2rem',
+              backgroundColor: '#10b981',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '1rem'
+            }}
+          >
+            🏢 Sign in as Organization
           </button>
         </div>
       </div>
