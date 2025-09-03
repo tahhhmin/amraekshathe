@@ -11,6 +11,10 @@ export default function Header() {
             </div>
 
             <div className={Styles.navContainer}>
+                <Link href='/'>
+                    <p>Home</p>
+                </Link>
+
                 <Link href='/projects'>
                     <p>Projects</p>
                 </Link>

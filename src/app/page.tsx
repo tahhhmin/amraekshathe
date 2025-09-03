@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Styles from './styles/page.module.css';
 import Button from '@/components/common/button/Button';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import HeroSection from '@/components/home-page/HeroSection';
 
 export default function Home() {
     const { data: session, status } = useSession();
@@ -18,6 +19,8 @@ export default function Home() {
     return (
         <main className={Styles.page}>
             {/* Auth Status Display */}
+            <HeroSection />
+
             <div style={{ 
                 padding: '1rem', 
                 background: session ? '#d4edda' : '#f8d7da', 
