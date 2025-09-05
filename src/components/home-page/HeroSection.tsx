@@ -1,46 +1,61 @@
 import React from 'react'
 import Styles from './HeroSection.module.css'
-import Button from '../common/button/Button'
+import Button from '@/components/common/button/Button'
+import { HeartHandshake } from 'lucide-react'
 
 export default function HeroSection() {
     return (
         <div className={Styles.container}>
-            
-            <div className={Styles.tag}>
-               <p>An Initiative by</p>
-            </div>
+            <div className={Styles.titleImageContainer}>
+                <div className={Styles.titleContainer}>
 
-            <div className={Styles.titleContainer}>
-                <h1 className={Styles.heroText}>Connect Volunteers with</h1>
-                <h1 className={`${Styles.heroText} ${Styles.title}`}>Meaningful Causes</h1>
-            </div>
+                    <div className={Styles.tag}>
+                        <HeartHandshake className={Styles.icon}/>
+                        <p>Amra Ekshathe</p>
+                    </div>
 
+                    <h1 className={Styles.title}>Connect Volunteers with Meaningful Cause</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe placeat, ex nemo eius nostrum dolor quidem vel ad fuga impedit natus, in atque amet corrupti aliquam iure enim minus eum.</p>
+                
+                    <div className={Styles.buttonContainer}>
+                        <Button
+                            variant='primary'
+                            label='Signin As a Volunteer'
+                            showIcon
+                        />
 
-            <div className={Styles.userContainerWrapper}>
-                <div className={Styles.userContainer}>
-                    <h2>Volunteer?</h2>
-                    <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing 
-                        elit.
-                    </p>
-                    <Button
-                        variant='primary'
-                        label='Get Started'
-                        showIcon
-                    />
+                        <Button
+                            variant='secondary'
+                            label='Signin As a Volunteer'
+                            showIcon
+                        />
+                    </div>
                 </div>
 
-                <div className={Styles.userContainer}>
-                    <h2>Organization?</h2>
-                    <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing 
-                        elit.
-                    </p>
-                    <Button
-                        variant='primary'
-                        label='Get Started'
-                        showIcon
-                    />
+                <div className={Styles.imageContainer}>
+
+                </div>
+            </div>
+
+            <div className={Styles.infoContainer}>
+                <h2 className={Styles.infoContainerTitle}>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </h2>
+                <div className={Styles.statContainerWrapper}>
+                    <div className={Styles.statContainer}>
+                        <h2 className={Styles.infoTitle}>510+</h2>
+                        <p className={Styles.infoSubtitle}>Projects</p>
+                    </div>
+
+                    <div className={Styles.statContainer}>
+                        <h2 className={Styles.infoTitle}>160+</h2>
+                        <p className={Styles.infoSubtitle}>Organizations</p>
+                    </div>
+
+                    <div className={Styles.statContainer}>
+                        <h2 className={Styles.infoTitle}>1600+</h2>
+                        <p className={Styles.infoSubtitle}>Volunteers</p>
+                    </div>
                 </div>
             </div>
         </div>

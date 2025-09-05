@@ -4,6 +4,7 @@ import Styles from './styles/page.module.css';
 import Button from '@/components/common/button/Button';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import HeroSection from '@/components/home-page/HeroSection';
+import HeroImage from '@/components/home-page/HeroImage';
 
 export default function Home() {
     const { data: session, status } = useSession();
@@ -20,6 +21,11 @@ export default function Home() {
         <main className={Styles.page}>
             {/* Auth Status Display */}
             <HeroSection />
+
+            <div className={Styles.heroImage}>
+                <HeroImage />
+            </div>
+            
 
             <div style={{ 
                 padding: '1rem', 

@@ -7,11 +7,61 @@
     left: 0; 
     width: 100%;
     z-index: 1000; 
+    background-color: #fcf8f5;
+    height: 64px;
 }
-
 .navContainer {
     display: flex;
     flex-direction: row;
     gap: 1rem;
 }
+.logoContainer {
+    background-color: #7460c0;
+    padding: 0.5rem;
+    height: 100%;
+    width: 100%;
+    display: flex;              
+    align-items: center;      
+    justify-content: center;  
+}
+.logoLink {
+    margin: auto 0;
+}
 
+.navItemContainer {
+    height: 100%;
+    border: 1px solid #7460c0;
+    width: 100%;
+    border-right: none;
+    border-top: none;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: auto 0;
+}
+.link {
+    text-decoration: none;
+    margin: auto 0;
+}
+.navItemContainer p {
+    color: #7460c0;
+    text-decoration: none;
+}
+
+.buttonContainer {
+    background-color: #f56a4e;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    height: 100%;
+}
+
+.buttonContainer p {
+    margin: auto 0;
+    color: #fcf8f5;
+    cursor: pointer;
+}
+
+.buttonContainer p:hover {
+    text-decoration: underline;
+}

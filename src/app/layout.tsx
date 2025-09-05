@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Inter } from "next/font/google";
+import { Lora, Inter } from "next/font/google";
 
 import Providers from './providers';
 import HeaderLayout from "@/components/header/HeaderLayout";
@@ -9,7 +9,7 @@ import "./styles/globals.css"
 import "./styles/typography.css"
 import "./styles/colorpalette.css"
 
-const montserrat = Montserrat({
+const lora = Lora({
     variable: "--font-heading",
     subsets: ["latin"],
 });
@@ -36,7 +36,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${montserrat.variable} ${inter.variable}`}>
+            <body className={`${lora.variable} ${inter.variable}`}>
                 <Providers>
                     <HeaderLayout />
                         {children}

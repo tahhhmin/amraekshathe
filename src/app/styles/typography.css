@@ -2,11 +2,9 @@
 
 h1 {
     font-family: var(--font-heading);
-    font-size: ;
-    font-weight: ;
-    color: ;
-    line-height: ;
-    letter-spacing: ;
+    font-size: 4rem;
+    font-weight: 400;
+    color: var(--color-text);
 }
 h2 {
     font-family: var(--font-heading);
