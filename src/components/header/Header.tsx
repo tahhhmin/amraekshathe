@@ -6,6 +6,7 @@ import HeaderAuthButton from '@/components/custom-buttons/HeaderAuthButton'
 import Logo from '../../../public/logo.svg'
 
 import Image from 'next/image'
+import ThemeToggleButton from '../custom-buttons/ThemeButton'
 
 export default function Header() {
     return (
@@ -52,9 +53,14 @@ export default function Header() {
                 </Link>
             </div>
 
-
-            <div className={Styles.buttonContainer}>
+            <div className={`${Styles.buttonContainer} ${Styles.active}`}>
+                <ThemeToggleButton />
+            </div>
+            <div className={`${Styles.buttonContainer} ${Styles.authButton}`}>
                 <HeaderAuthButton />
+            </div>
+            <div className={`${Styles.buttonContainer} ${Styles.active}`}>
+                <ThemeToggleButton />
             </div>
         </header>   
     )

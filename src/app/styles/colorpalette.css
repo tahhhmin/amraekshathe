@@ -1,17 +1,20 @@
 :root {  
-    --color-primary: #7460c0;
-    --color-primary-light: #ead4ff;
+  /* Brand Colors */
+  --color-primary: #3B82F6;       /* Vibrant Blue */
+  --color-primary-light: #DBEAFE; /* Soft Sky Blue */
+  --color-secondary: #F97316;     /* Warm Orange */
 
-    --color-secondary: #f56a4e; 
-    --color-background: #fcf8f5;
+  /* Backgrounds & Surfaces */
+  --color-background: #FCF8F5;    /* Neutral background */
+  --color-white: #FCF8F5;
+  --color-off-white: #F9FAFB;
 
-    --color-white: #fcfffd;
-    --color-off-white: #fcfffd;
-    --color-black: #0e100f;
-    --color-gray: #171717;
-    --color-light-gray: #373737;
-    --color-light1-gray: #212121;
-    --color-light2-gray: #9da1a1;
+  /* Text & Neutrals */
+  --color-black: #0E100F;
+  --color-gray: #171717;
+  --color-light-gray: #373737;
+  --color-light1-gray: #212121;
+  --color-light2-gray: #9DA1A1;
 
     /* Default to light theme */
     --color-text: var(--color-black);

@@ -1,15 +1,17 @@
 'use client';
+import ThemeToggleButton from '@/components/custom-buttons/ThemeButton';
 import Styles from './styles/page.module.css';
 import HeroSection from '@/components/home-page/HeroSection';
-import HeroImage from '@/components/home-page/HeroImage';
+import ImageSection from '@/components/home-page/ImageSection';
 
 export default function Home() {
     return (
         <main className={Styles.page}>
             <HeroSection />
-            <div className={Styles.heroImage}>
-                <HeroImage />
+            <div className={Styles.imageSection}>
+                <ImageSection />
             </div>
+            <ThemeToggleButton />
         </main>
     );
 }

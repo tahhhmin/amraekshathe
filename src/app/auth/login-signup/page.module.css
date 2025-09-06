@@ -1,224 +1,70 @@
-
-.container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
-  display: flex;
-  flex-direction: column;
+.page {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+}
+.imageContainer {
+    width: 75%;
+    background-color: greenyellow;
+}
+.sidebarContainer {
+    width: 25%;
+    background-color: var(--color-background);
 }
 
-.header {
-  background: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.buttonContainerHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
-.headerContent {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 4rem;
+.title {
+    color: var(--color-primary);
+    font-family: var(--font-body);
+}
+.headerItem {
+    border-bottom: 1px solid var(--color-primary);
+    padding: 1rem;
+    width: 100%;
+}
+.headerButton {
+    background-color: var(--color-secondary);
+    width: 30%;
+    display: flex;
+    justify-content: center;
 }
 
-.logo h1 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #111827;
-  margin: 0;
+.buttonContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.selectButton {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid var(--color-primary);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-decoration: none;
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    font-family: var(--font-body);
+    font-weight: 400;
 }
 
-.backLink {
-  color: #6b7280;
-  text-decoration: none;
-  transition: color 0.2s;
+.buttonLabel {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0 auto;
 }
 
-.backLink:hover {
-  color: #111827;
-}
-
-.main {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-}
-
-.card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  width: 100%;
-  max-width: 800px;
-}
-
-.cardHeader {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.cardHeader h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #111827;
-  margin: 0 0 0.5rem 0;
-}
-
-.cardHeader p {
-  color: #6b7280;
-  margin: 0;
-}
-
-.accountTypes {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-@media (max-width: 768px) {
-  .accountTypes {
-    grid-template-columns: 1fr;
-  }
-}
-
-.accountTypeButton {
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s;
-  width: 100%;
-}
-
-.volunteerButton:hover {
-  border-color: #3b82f6;
-  background: #eff6ff;
-}
-
-.organizationButton:hover {
-  border-color: #10b981;
-  background: #f0fdf4;
-}
-
-.accountTypeIcon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.accountTypeButton h3 {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #111827;
-  margin: 0 0 0.5rem 0;
-}
-
-.accountTypeButton p {
-  color: #6b7280;
-  margin: 0 0 1rem 0;
-}
-
-.accountTypeButton ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.accountTypeButton li {
-  color: #374151;
-  font-size: 0.875rem;
-  margin-bottom: 0.25rem;
-}
-
-.googleButton {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  background: white;
-  color: #374151;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-bottom: 1rem;
-}
-
-.googleButton:hover:not(:disabled) {
-  background: #f9fafb;
-}
-
-.googleButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.googleButtonContent {
-  display: flex;
-  align-items: center;
-}
-
-.loadingContent {
-  display: flex;
-  align-items: center;
-}
-
-.googleIcon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.75rem;
-}
-
-.spinner {
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid #e5e7eb;
-  border-top: 2px solid #3b82f6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-right: 0.5rem;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.backButton {
-  width: 100%;
-  padding: 0.5rem;
-  background: none;
-  border: none;
-  color: #3b82f6;
-  cursor: pointer;
-  font-size: 0.875rem;
-  transition: color 0.2s;
-  margin-bottom: 1rem;
-}
-
-.backButton:hover {
-  color: #1d4ed8;
-}
-
-.privacy {
-  text-align: center;
-}
-
-.privacy p {
-  font-size: 0.75rem;
-  color: #6b7280;
-  margin: 0;
-  line-height: 1.4;
+.selectButton:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
 }

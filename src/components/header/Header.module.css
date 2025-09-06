@@ -50,12 +50,15 @@
 
 .buttonContainer {
     background-color: var(--color-secondary);
-    width: 100%;
+    width: fit-content;
     justify-content: center;
     display: flex;
     height: 100%;
+    padding: 0 2rem;
 }
-
+.authButton {
+    width: 100%;
+}
 .buttonContainer p {
     margin: auto 0;
     color: #fcf8f5;

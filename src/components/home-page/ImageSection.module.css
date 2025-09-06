@@ -1,0 +1,5 @@
+.container {
+    height: 100vh;
+    background-color: var(--color-primary);
+    border-radius: 1.5rem 1.5rem 0 0;
+}

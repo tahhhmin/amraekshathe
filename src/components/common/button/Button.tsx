@@ -12,52 +12,83 @@ type ButtonVariant =
   | 'icon'
   | 'action'
   | 'danger'
-  | 'submit'
-  | 'loading';
+  | 'submit';
+
+type ButtonSize = 'small' | 'medium' | 'large';
 
 interface ButtonProps {
   variant?: ButtonVariant;
+  size?: ButtonSize;
+  shapeless?: boolean;
+  loading?: boolean;
   label?: string;
   showIcon?: boolean;
   icon?: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
+  'aria-label'?: string;
+  className?: string;
 }
 
 export default function Button({
-    variant = 'primary',
-    label,
-    showIcon,
-    icon,
-    type = 'button',
-    disabled = false,
-    onClick,
+  variant = 'primary',
+  size = 'medium',
+  shapeless = false,
+  loading = false,
+  label,
+  showIcon = false,
+  icon,
+  type = 'button',
+  disabled = false,
+  onClick,
+  'aria-label': ariaLabel,
+  className = '',
 }: ButtonProps) {
-  const isLoading = variant === 'loading';
-
   const IconComponent = (icon && icon in LucideIcons
     ? LucideIcons[icon as keyof typeof LucideIcons]
     : LucideIcons.ArrowUpRight) as React.ElementType;
 
-  const buttonClassName = `${Styles.button} ${Styles[variant] || ''}`;
+  // Build className string
+  const buttonClassName = [
+    Styles.button,
+    Styles[variant],
+    Styles[size],
+    shapeless && Styles.shapeless,
+    loading && Styles.loading,
+    className
+  ].filter(Boolean).join(' ');
 
-    return (
-        <button
-        className={buttonClassName}
-        onClick={onClick}
-        disabled={disabled || isLoading}
-        type={type}
-        aria-label={!label && showIcon ? 'button icon' : label}
-        >
-        {showIcon && (
-            isLoading ? (
-            <CircleLoader size={18} color="#fff" backgroundColor="#888" thickness={2} />
-            ) : (
-            IconComponent && <IconComponent className={Styles.buttonIcon} size={24} />
-            )
-        )}
-        {label && <span className={Styles.buttonLabel}>{label}</span>}
-        </button>
-    );
+  // Determine aria-label
+  const buttonAriaLabel = ariaLabel || 
+    (!label && showIcon ? `${icon || 'button'} button` : label);
+
+  return (
+    <button
+      className={buttonClassName}
+      onClick={onClick}
+      disabled={disabled || loading}
+      type={type}
+      aria-label={buttonAriaLabel}
+    >
+      {showIcon && (
+        loading ? (
+          <CircleLoader 
+            size={size === 'small' ? 14 : size === 'large' ? 20 : 18} 
+            color={variant === 'outlined' || variant === 'icon' ? 'var(--color-text)' : '#fff'} 
+            backgroundColor="#888" 
+            thickness={2} 
+          />
+        ) : (
+          IconComponent && (
+            <IconComponent 
+              className={Styles.buttonIcon} 
+              size={size === 'small' ? 16 : size === 'large' ? 28 : 24} 
+            />
+          )
+        )
+      )}
+      {label && <span className={Styles.buttonLabel}>{label}</span>}
+    </button>
+  );
 }

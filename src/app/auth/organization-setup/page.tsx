@@ -167,3 +167,23 @@ export default function OrganizationSetup() {
     </div>
   );
 }
+
+
+
+
+
+                    <button
+                        onClick={() => handleSignIn('volunteer')}
+                        disabled={loading}
+                        className={Styles.selectButton}
+                    >
+                        Sign in as Volunteer
+                    </button>
+                
+                    <button
+                        onClick={() => handleSignIn('organization')}
+                        disabled={loading}
+                        className={Styles.selectButton}
+                    >
+                        Sign in as Organization
+                    </button>

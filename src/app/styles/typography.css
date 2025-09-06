@@ -12,11 +12,22 @@ h2 {
     font-weight: 400;
     color: var(--color-text);
 }
-
+h3 {
+    font-family: var(--font-heading);
+    font-size: 1.24rem;
+    font-weight: 400;
+    color: var(--color-text);
+}
 p {
     font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 400;
     color: var(--color-text);
     line-height: 1.5;
+}
+
+a {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 1rem;
 }

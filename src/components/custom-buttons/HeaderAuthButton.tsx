@@ -4,6 +4,7 @@ import React from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
 import Styles from './HeaderAuthButton.module.css'
+import Button from '@/components/common/button/Button';
 
 export default function AuthButton() {
   const { data: session, status } = useSession();
@@ -20,9 +21,14 @@ export default function AuthButton() {
       : '/organization/dashboard';
 
     return (
-      <Link href={profileUrl} className={Styles.link}>
-        <p>Profile</p>
-      </Link>
+        <Link href={profileUrl} className={Styles.link}>
+                <Button 
+                    variant='primary'
+                    shapeless={true}
+                    label='Profile'
+                    showIcon
+                />
+        </Link>
     );
   }
 
