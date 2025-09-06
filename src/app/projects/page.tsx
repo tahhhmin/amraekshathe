@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Styles from './page.module.css';
+import IndeterminateProgressBar from '@/components/common/Progress/FreeProgressBar';
 
 interface Project {
     _id: string;
@@ -165,8 +166,9 @@ export default function ProjectsPage() {
     if (loading && projects.length === 0) {
         return (
             <main className={Styles.page}>
-                <h1>Projects</h1>
-                <div className="loading">Loading projects...</div>
+                <div className="loading">
+                    <IndeterminateProgressBar />
+                </div>                
             </main>
         );
     }
@@ -187,6 +189,7 @@ export default function ProjectsPage() {
 
     return (
         <main className={Styles.page}>
+            <div className={Styles.pageContainer}>
             <div className="header">
                 <h1>Projects</h1>
                 {summary && (
@@ -371,6 +374,7 @@ export default function ProjectsPage() {
                     )}
                 </>
             )}
+            </div>
         </main>
     );
 }

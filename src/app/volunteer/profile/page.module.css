@@ -1,0 +1,22 @@
+.page {
+    margin-top: 4rem;
+}
+.pageContainer {
+    width: 1440px;
+    margin: 2rem auto 0 auto;
+}
+
+
+
+.profileHeader {
+    display: flex;
+    gap: 1rem;
+}
+
+.profileImage {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    overflow: hidden;
+}

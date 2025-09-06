@@ -11,7 +11,7 @@ interface CircleLoaderProps {
 
 const CircleLoader: React.FC<CircleLoaderProps> = ({
     size = 40,
-    color = '#f0562d',
+    color = 'var(--color-primary)',
     thickness = 4,
     backgroundColor = 'transparent',
     ariaLabel = 'Loading',

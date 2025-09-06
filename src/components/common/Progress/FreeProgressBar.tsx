@@ -11,7 +11,7 @@ interface IndeterminateProgressBarProps {
 const IndeterminateProgressBar: React.FC<IndeterminateProgressBarProps> = ({ 
     className,
     height = 16,
-    color = '#FEB854',
+    color = 'var(--color-primary)',
     speed = 2
 }) => {
   return (

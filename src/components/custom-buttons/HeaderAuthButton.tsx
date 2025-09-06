@@ -27,7 +27,7 @@ export default function AuthButton() {
   }
 
   return (
-    <Link href='/auth/signin' className={Styles.link}>
+    <Link href='/auth/login-signup' className={Styles.link}>
         <p>Login / Signup</p>
     </Link>
   );

@@ -1,10 +1,10 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import dbConnect from '@/lib/connectDB';
 import Volunteer from '@/models/Volunteer';
 import Organization from '@/models/Organization';
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -63,6 +63,8 @@ const handler = NextAuth({
             accountType,
             isAdmin: dbUser.isAdmin || false,
             isVerified: dbUser.isVerified || false,
+            // Keep the original image from OAuth
+            image: session.user.image,
           },
         };
       }
@@ -72,6 +74,8 @@ const handler = NextAuth({
   pages: {
     signIn: '/auth/signin',
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

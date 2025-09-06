@@ -2,6 +2,7 @@ import React from 'react'
 import Styles from './HeroSection.module.css'
 import Button from '@/components/common/button/Button'
 import { HeartHandshake } from 'lucide-react'
+import Link from 'next/link'
 
 export default function HeroSection() {
     return (
@@ -18,17 +19,21 @@ export default function HeroSection() {
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe placeat, ex nemo eius nostrum dolor quidem vel ad fuga impedit natus, in atque amet corrupti aliquam iure enim minus eum.</p>
                 
                     <div className={Styles.buttonContainer}>
-                        <Button
-                            variant='primary'
-                            label='Signin As a Volunteer'
-                            showIcon
-                        />
-
-                        <Button
+                        <Link href='/auth/signup/volunteer'>
+                            <Button
+                                variant='primary'
+                                label='Signin As a Volunteer'
+                                showIcon
+                            />
+                        </Link>
+                        <Link href='/auth/signup/organization'>
+                            <Button
                             variant='secondary'
                             label='Signin As a Volunteer'
                             showIcon
-                        />
+                            />
+                        </Link>
+                        
                     </div>
                 </div>
 

@@ -7,7 +7,7 @@
     left: 0; 
     width: 100%;
     z-index: 1000; 
-    background-color: #fcf8f5;
+    background-color: var(--color-background);
     height: 64px;
 }
 .navContainer {
@@ -16,7 +16,7 @@
     gap: 1rem;
 }
 .logoContainer {
-    background-color: #7460c0;
+    background-color: var(--color-primary);
     padding: 0.5rem;
     height: 100%;
     width: 100%;
@@ -30,7 +30,7 @@
 
 .navItemContainer {
     height: 100%;
-    border: 1px solid #7460c0;
+    border: 1px solid var(--color-primary);
     width: 100%;
     border-right: none;
     border-top: none;
@@ -44,12 +44,12 @@
     margin: auto 0;
 }
 .navItemContainer p {
-    color: #7460c0;
+    color: var(--color-primary);
     text-decoration: none;
 }
 
 .buttonContainer {
-    background-color: #f56a4e;
+    background-color: var(--color-secondary);
     width: 100%;
     justify-content: center;
     display: flex;
